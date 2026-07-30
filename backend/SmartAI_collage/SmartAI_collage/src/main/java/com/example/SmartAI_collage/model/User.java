@@ -16,13 +16,13 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "user_id" , length = 50)
     private String userId;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false,length = 100)
     private String email;
 
     @Column(name = "password_hash", nullable = false)
