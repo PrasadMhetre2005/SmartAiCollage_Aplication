@@ -1,3 +1,4 @@
+
 package com.example.SmartAI_collage.service;
 
 import com.example.SmartAI_collage.dto.AuthenticationRequest;
@@ -7,7 +8,9 @@ import com.example.SmartAI_collage.model.Role;
 import com.example.SmartAI_collage.model.User;
 import com.example.SmartAI_collage.repository.UserRepository;
 import com.example.SmartAI_collage.security.JwtService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,23 +25,44 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    // REGISTER
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = new User();
+
+       
+        System.out.println("USER ID RECEIVED = " + request.getUserId());
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        User user = new User();
+
         user.setUserId(request.getUserId());
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
-        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.valueOf(request.getRole().toUpperCase()));
+
+        user.setPasswordHash(
+                passwordEncoder.encode(request.getPassword())
+        );
+
+        user.setRole(
+                Role.valueOf(request.getRole().toUpperCase())
+        );
 
         userRepository.save(user);
 
-        var jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .email(user.getEmail())
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    // LOGIN
+    public AuthenticationResponse authenticate(
+            AuthenticationRequest request) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -46,12 +70,16 @@ public class AuthenticationService {
                 )
         );
 
-        var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow();
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new RuntimeException("User not found")
+                );
 
-        var jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .email(user.getEmail())
                 .build();
     }
 }

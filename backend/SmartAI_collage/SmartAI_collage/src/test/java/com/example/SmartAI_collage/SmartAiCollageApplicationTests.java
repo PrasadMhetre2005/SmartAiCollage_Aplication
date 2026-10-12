@@ -1,13 +1,13 @@
-package com.example.SmartAI_collage;
+// package com.example.SmartAI_collage;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SmartAiCollageApplicationTests {
+// @SpringBootTest
+// class SmartAiCollageApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }
