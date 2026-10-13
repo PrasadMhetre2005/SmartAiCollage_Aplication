@@ -28,9 +28,6 @@ public class AuthenticationService {
     // REGISTER
     public AuthenticationResponse register(RegisterRequest request) {
 
-       
-        System.out.println("USER ID RECEIVED = " + request.getUserId());
-
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
@@ -45,9 +42,7 @@ public class AuthenticationService {
                 passwordEncoder.encode(request.getPassword())
         );
 
-        user.setRole(
-                Role.valueOf(request.getRole().toUpperCase())
-        );
+        user.setRole(Role.STUDENT);
 
         userRepository.save(user);
 
