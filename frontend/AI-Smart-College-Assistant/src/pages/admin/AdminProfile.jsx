@@ -1,0 +1,3 @@
+import React from "react";
+import AdminModulePage from "../../components/AdminModulePage";
+export default function AdminProfile(){return <AdminModulePage title="Admin Profile" subtitle="Review the administrator profile fields in this frontend demo." columns={[{key:"field",label:"Field"},{key:"value",label:"Value"}]} initialRows={[{field:"Display name",value:"College Administrator"},{field:"Email",value:"admin@example.edu"},{field:"Role",value:"System Administrator"},{field:"Access",value:"Demo interface — backend authorization required"}]} fields={[{name:"field",label:"Profile field",required:true},{name:"value",label:"New value",required:true}]}/>}

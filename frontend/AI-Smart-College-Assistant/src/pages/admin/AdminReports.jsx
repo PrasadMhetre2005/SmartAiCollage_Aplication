@@ -1,0 +1,3 @@
+import React from "react";
+import AdminModulePage from "../../components/AdminModulePage";
+export default function AdminReports(){return <AdminModulePage title="Reports" subtitle="Browse report templates and export the displayed demo records." columns={[{key:"report",label:"Report"},{key:"category",label:"Category"},{key:"updated",label:"Last updated"},{key:"status",label:"Status"}]} initialRows={[{report:"Student enrollment summary",category:"Students",updated:"Today",status:"Ready"},{report:"Attendance overview",category:"Academics",updated:"Yesterday",status:"Ready"},{report:"Faculty activity summary",category:"Faculty",updated:"This week",status:"Draft"},{report:"Course utilization",category:"Courses",updated:"This week",status:"Pending"}]}/>}
